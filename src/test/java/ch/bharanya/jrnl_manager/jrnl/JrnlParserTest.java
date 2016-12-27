@@ -32,8 +32,8 @@ public class JrnlParserTest {
 
 		Assert.assertEquals(true, jrnlEntries.get(1).isStarred());
 
-		Assert.assertEquals(LocalDateTime.of(2014, 12, 23, 00, 00, 00), jrnlEntries.get(1).getDate());
-		Assert.assertEquals(LocalDateTime.of(2014, 12, 24, 00, 00, 00), jrnlEntries.get(2).getDate());
+		Assert.assertEquals(LocalDateTime.of(2014, 12, 23, 12, 12, 00), jrnlEntries.get(1).getDate());
+		Assert.assertEquals(LocalDateTime.of(2014, 12, 24, 13, 59, 00), jrnlEntries.get(2).getDate());
 	}
 
 	@Test
