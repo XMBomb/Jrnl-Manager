@@ -1,0 +1,29 @@
+{
+  "entries": [
+    {
+      "date": "2014-12-22",
+      "time": "00:00",
+      "body": "Just finished now\nHappy :D\n\n",
+      "title": "Rating: 8, Good day at work, got to work on this",
+      "starred": false
+    },
+    {
+      "date": "2014-12-23",
+      "time": "00:00",
+      "body": "\n",
+      "title": "Rating: 7",
+      "starred": true
+    },
+    {
+      "date": "2014-12-24",
+      "time": "00:00",
+      "body": "\n",
+      "title": "Rating: 9",
+      "starred": false
+    }
+  ],
+  "tags": {
+    "@cyrill": 14,
+    "@noah": 4
+  }
+}
