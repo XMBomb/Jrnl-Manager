@@ -2,7 +2,7 @@ package ch.bharanya.jrnl_manager.controller;
 import static spark.Spark.get;
 
 import ch.bharanya.jrnl_manager.IController;
-import ch.bharanya.jrnl_manager.JrnlManager;
+import ch.bharanya.jrnl_manager.JrnlService;
 
 public class EntryController implements IController{
 	
@@ -10,7 +10,7 @@ public class EntryController implements IController{
 	public void setup(){
 		get("/entries", (request, response) -> {
 			response.type("application/json");
-			return JrnlManager.getInstance().getJrnlEntries();
+			return JrnlService.getInstance().getJrnlEntries();
 		}, new JsonTransformer());
 		
 //		get("/entry/:datetime", (request, response) -> {
