@@ -2,8 +2,10 @@ package ch.bharanya.jrnl_manager.controller;
 
 import java.util.Optional;
 
-import ch.bharanya.jrnl_manager.IController;
-import ch.bharanya.jrnl_manager.JrnlService;
+import ch.bharanya.jrnl_manager.service.JrnlService;
+import ch.bharanya.jrnl_manager.controller.message.ErrorMessage;
+import ch.bharanya.jrnl_manager.controller.util.Http;
+import ch.bharanya.jrnl_manager.controller.util.JsonTransformer;
 import ch.bharanya.jrnl_manager.parser.Tag;
 import spark.Spark;
 
@@ -28,10 +30,6 @@ public class TagController implements IController {
 			response.status(Http.NOT_FOUND);
 			return new ErrorMessage("Could not find a tag with name %s", tagName);
 		}, new JsonTransformer());
-		
-		Spark.after((request, response) -> {
-			response.type("application/json");
-		});
 	}
 
 }

@@ -7,7 +7,7 @@ import java.net.URL;
 
 import ch.bharanya.jrnl_manager.conf.Config;
 import ch.bharanya.jrnl_manager.controller.TestResponse;
-import junit.framework.Assert;
+import org.junit.Assert;
 import spark.utils.IOUtils;
 
 public class RequestUtil {

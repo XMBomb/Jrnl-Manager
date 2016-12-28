@@ -1,20 +1,23 @@
 package ch.bharanya.jrnl_manager.controller;
-import static spark.Spark.get;
 
-import ch.bharanya.jrnl_manager.IController;
-import ch.bharanya.jrnl_manager.JrnlService;
+import ch.bharanya.jrnl_manager.service.JrnlService;
+import ch.bharanya.jrnl_manager.controller.util.JsonTransformer;
+import spark.Spark;
 
 public class EntryController implements IController{
 	
 	@Override
 	public void setup(){
-		get("/entries", (request, response) -> {
-			response.type("application/json");
+		Spark.get("/entries", (request, response) -> {
 			return JrnlService.getInstance().getJrnlEntries();
 		}, new JsonTransformer());
 		
-//		get("/entry/:datetime", (request, response) -> {
-//			return JrnlManager.getInstance().findJrnlEntryWithDate(request.params(":datetime"));
-//		});
+		Spark.get("/entry/date/:datetime", (request, response) -> {
+			return JrnlService.getInstance().findJrnlEntryWithDate(request.params(":datetime"));
+		}, new JsonTransformer());
+
+		Spark.get("/entries/tag/:tagName", (request, response) -> {
+			return JrnlService.getInstance().findJrnlEntriesByTagName(request.params(":tagName"));
+		}, new JsonTransformer());
 	}
 }

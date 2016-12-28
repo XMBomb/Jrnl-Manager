@@ -2,15 +2,17 @@ package ch.bharanya.jrnl_manager.controller;
 
 import java.util.List;
 
+import ch.bharanya.jrnl_manager.controller.message.EMessageType;
+import ch.bharanya.jrnl_manager.controller.message.ErrorMessage;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.gson.internal.LinkedTreeMap;
 
 import ch.bharanya.jrnl_manager.parser.Tag;
 import ch.bharanya.jrnl_manager.util.RequestUtil;
-import junit.framework.Assert;
 
-public class TagControllerTest{
+public class TagControllerTest extends AControllerTest{
 	
 	@Test
 	public void getAllTags() {

@@ -1,44 +1,42 @@
 package ch.bharanya.jrnl_manager.controller;
 
-import java.util.List;
-
+import ch.bharanya.jrnl_manager.parser.JrnlEntry;
+import ch.bharanya.jrnl_manager.parser.json.JsonJrnl;
+import ch.bharanya.jrnl_manager.util.RequestUtil;
+import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.gson.internal.LinkedTreeMap;
-
-import ch.bharanya.jrnl_manager.parser.Tag;
-import ch.bharanya.jrnl_manager.util.RequestUtil;
-import junit.framework.Assert;
-
-public class EntryControllerTest {
+public class EntryControllerTest extends AControllerTest{
 	@Test
-	public void getAllTags() {
-		final TestResponse res = RequestUtil.request("GET", "/tags");
-		final List<LinkedTreeMap<String, Integer>> tags = res.getJson(List.class);
+	public void getAllEntries() {
+		final TestResponse res = RequestUtil.request("GET", "/entries");
+		final JsonJrnl entries = res.getJson(JsonJrnl.class);
 		Assert.assertEquals(200, res.status);
-		Assert.assertEquals("@cyrill", tags.get(0).get("name"));
-		Assert.assertEquals(new Double(14), tags.get(0).get("numUses"));
-
-		Assert.assertEquals("@noah", tags.get(1).get("name"));
-		Assert.assertEquals(new Double(4), tags.get(1).get("numUses"));
 	}
 
 	@Test
-	public void getTagByName() {
-		final TestResponse res = RequestUtil.request("GET", "/tag/@cyrill");
-		final Tag tag = res.getJson(Tag.class);
-		Assert.assertEquals(new Tag("@cyrill", 14), tag);
+	public void getEntryWithDate() {
+		final TestResponse res = RequestUtil.request("GET", "/entry/2014-12-23T12:12");
+		final JrnlEntry entry = res.getJson(JrnlEntry.class);
+		Assert.assertEquals(200, res.status);
 	}
 
-	@Test
-	public void getNonExistingTag() {
-		final TestResponse res = RequestUtil.request("GET", "/tag/@nopasdklajsdolasjd");
-		final ErrorMessage errorMessage = res.getJson(ErrorMessage.class);
-
-		Assert.assertTrue(errorMessage.getType() == EMessageType.ERROR);
-		// I know :) but if the error message at least contains the stuff were
-		// looking for I'm happy
-		Assert.assertTrue(errorMessage.getMessage().contains("@nopasdklajsdolasjd"));
-	}
+//	@Test
+//	public void getTagByName() {
+//		final TestResponse res = RequestUtil.request("GET", "/tag/@cyrill");
+//		final Tag tag = res.getJson(Tag.class);
+//		Assert.assertEquals(new Tag("@cyrill", 14), tag);
+//	}
+//
+//	@Test
+//	public void getNonExistingTag() {
+//		final TestResponse res = RequestUtil.request("GET", "/tag/@nopasdklajsdolasjd");
+//		final ErrorMessage errorMessage = res.getJson(ErrorMessage.class);
+//
+//		Assert.assertTrue(errorMessage.getType() == EMessageType.ERROR);
+//		// I know :) but if the error message at least contains the stuff were
+//		// looking for I'm happy
+//		Assert.assertTrue(errorMessage.getMessage().contains("@nopasdklajsdolasjd"));
+//	}
 
 }

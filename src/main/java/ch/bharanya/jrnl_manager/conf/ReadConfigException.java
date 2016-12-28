@@ -3,7 +3,7 @@ package ch.bharanya.jrnl_manager.conf;
 /**
  * Simple Wrapper for {@link RuntimeException} to show that the has been an Exception reading the Configuration
  */
-public class ReadConfigException extends RuntimeException {
+class ReadConfigException extends RuntimeException {
 	/**
 	 * Generated
 	 */

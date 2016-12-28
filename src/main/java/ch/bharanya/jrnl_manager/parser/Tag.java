@@ -1,5 +1,7 @@
 package ch.bharanya.jrnl_manager.parser;
 
+import java.util.Objects;
+
 public class Tag {
 	private String name;
 	private int numUses;
@@ -37,5 +39,10 @@ public class Tag {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getName(), getNumUses());
 	}
 }

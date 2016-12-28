@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 /**
  * Class to configure the system on startup.
  */
-public class ConfigUtil {
+class ConfigUtil {
 
 	/**
 	 * Place in the filesystem where the configuration file for Logback is.

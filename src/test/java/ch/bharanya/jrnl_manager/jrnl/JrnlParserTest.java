@@ -13,7 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import ch.bharanya.jrnl_manager.parser.JrnlEntry;
 import ch.bharanya.jrnl_manager.parser.JrnlParser;
 import ch.bharanya.jrnl_manager.parser.Tag;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class JrnlParserTest {
 	File testFile = new File("res\\test\\export.json");

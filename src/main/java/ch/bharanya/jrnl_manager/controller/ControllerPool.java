@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ch.bharanya.jrnl_manager.IController;
+import ch.bharanya.jrnl_manager.controller.util.Http;
+import spark.Spark;
 
 public class ControllerPool {
 	List<IController> controllers = new ArrayList<>();
@@ -15,5 +16,10 @@ public class ControllerPool {
 
 	public void setupControllers() {
 		controllers.stream().forEach(IController::setup);
+
+		Spark.after((request, response) -> {
+			response.type(Http.CONTENT_TYPE);
+		});
 	}
+
 }

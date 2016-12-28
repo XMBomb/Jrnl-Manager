@@ -1,16 +1,15 @@
-package ch.bharanya.jrnl_manager.controller;
+package ch.bharanya.jrnl_manager.controller.util;
 
+import ch.bharanya.jrnl_manager.util.JsonUtil;
 import com.google.gson.Gson;
 
 import spark.ResponseTransformer;
 
 public class JsonTransformer implements ResponseTransformer {
 
-    private final Gson gson = new Gson();
-
     @Override
     public String render(final Object model) {
-        return gson.toJson(model);
+        return JsonUtil.toJson(model);
     }
 
 }
