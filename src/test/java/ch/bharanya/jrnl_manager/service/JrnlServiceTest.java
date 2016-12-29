@@ -1,17 +1,13 @@
 package ch.bharanya.jrnl_manager.service;
 
 import ch.bharanya.jrnl_manager.ATest;
-import ch.bharanya.jrnl_manager.conf.Config;
 import ch.bharanya.jrnl_manager.parser.JrnlEntry;
 import ch.bharanya.jrnl_manager.parser.Tag;
-import ch.bharanya.jrnl_manager.util.AssertUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by XMBomb on 28.12.2016.
@@ -47,9 +43,14 @@ public class JrnlServiceTest extends ATest{
 
     @Test
     public void findJrnlEntriesByTagName() throws Exception {
-        List<JrnlEntry> entries = JrnlService.getInstance().findJrnlEntriesByTagName("@Test");
+        List<JrnlEntry> entries = JrnlService.getInstance().findJrnlEntries("@Test");
         Assert.assertEquals(3, entries.size());
     }
 
+    @Test
+    public void findRandomEntry() throws Exception {
+        JrnlEntry jrnlEntry = JrnlService.getInstance().findRandomEntry();
+        Assert.assertTrue(jrnlEntry != null  && jrnlEntry instanceof JrnlEntry);
+    }
 
 }

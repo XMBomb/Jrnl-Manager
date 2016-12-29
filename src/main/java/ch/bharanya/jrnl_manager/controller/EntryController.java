@@ -1,8 +1,14 @@
 package ch.bharanya.jrnl_manager.controller;
 
+import ch.bharanya.jrnl_manager.controller.message.ErrorMessage;
+import ch.bharanya.jrnl_manager.controller.util.Http;
+import ch.bharanya.jrnl_manager.parser.JrnlEntry;
 import ch.bharanya.jrnl_manager.service.JrnlService;
 import ch.bharanya.jrnl_manager.controller.util.JsonTransformer;
 import spark.Spark;
+
+import java.util.List;
+import java.util.Optional;
 
 public class EntryController implements IController{
 	
@@ -12,12 +18,24 @@ public class EntryController implements IController{
 			return JrnlService.getInstance().getJrnlEntries();
 		}, new JsonTransformer());
 		
-		Spark.get("/entry/date/:datetime", (request, response) -> {
-			return JrnlService.getInstance().findJrnlEntryWithDate(request.params(":datetime"));
+		Spark.get("/entries/date/:datetime", (request, response) -> {
+			String dateTime = request.params(":datetime");
+			Optional<JrnlEntry> jrnlEntry = JrnlService.getInstance().findJrnlEntryWithDate(dateTime);
+
+			if (jrnlEntry.isPresent()) return jrnlEntry.get();
+
+			response.status(Http.NOT_FOUND);
+			return new ErrorMessage("Could not find an entry with datetime %s", dateTime);
 		}, new JsonTransformer());
 
-		Spark.get("/entries/tag/:tagName", (request, response) -> {
-			return JrnlService.getInstance().findJrnlEntriesByTagName(request.params(":tagName"));
+		Spark.get("/entries/search/:searchText", (request, response) -> {
+			List<JrnlEntry> entries = JrnlService.getInstance().findJrnlEntries(request.params(":searchText"));
+			if (entries.size() == 0) response.status(Http.NOT_FOUND);
+			return entries;
+		}, new JsonTransformer());
+
+		Spark.get("/entries/random", (request, response) -> {
+			return JrnlService.getInstance().findRandomEntry();
 		}, new JsonTransformer());
 	}
 }

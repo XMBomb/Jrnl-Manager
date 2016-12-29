@@ -18,7 +18,7 @@ public class TagController implements IController {
 			return jrnlService.getTags();
 		}, new JsonTransformer());
 		
-		Spark.get("/tag/:tagName", (request, response) -> {
+		Spark.get("/tags/:tagName", (request, response) -> {
 			final String tagName = request.params(":tagName");
 			
 			final Optional<Tag> foundTag = jrnlService.findTagByName(tagName);

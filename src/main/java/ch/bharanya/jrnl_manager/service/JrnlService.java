@@ -10,9 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -58,20 +61,30 @@ public class JrnlService {
 	}
 
 	public Optional<JrnlEntry> findJrnlEntryWithDate(final String dateTime) {
-		LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
-		return getJrnlEntries().stream()
-				.filter(jrnlEntry ->
-						jrnlEntry.getDate().isEqual(localDateTime)
-				)
-				.findFirst();
+		try {
+			LocalDateTime localDateTime = LocalDateTime.parse(dateTime);
+			return getJrnlEntries().stream()
+					.filter(jrnlEntry ->
+							jrnlEntry.getDate().isEqual(localDateTime)
+					)
+					.findFirst();
+		}catch (DateTimeParseException e){
+			return Optional.empty();
+		}
 	}
 
-	public List<JrnlEntry> findJrnlEntriesByTagName(String tagName){
+	public List<JrnlEntry> findJrnlEntries(String searchText){
 		return getJrnlEntries().stream()
 				.filter(jrnlEntry ->
-						StringUtils.containsIgnoreCase(jrnlEntry.getContent(), tagName)
+						StringUtils.containsIgnoreCase(jrnlEntry.getContent(), searchText)
 				)
 				.collect(Collectors.toList());
 	}
 
+	public JrnlEntry findRandomEntry() {
+		int min = 0;
+		List<JrnlEntry> jrnlEntries = getJrnlEntries();
+		int max = jrnlEntries.size();
+		return jrnlEntries.get(ThreadLocalRandom.current().nextInt(min, max));
+	}
 }
