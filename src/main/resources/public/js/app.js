@@ -1,5 +1,4 @@
 var JrnlManager = function($) {
-
 	$.get('/entries/random', function(data) {
 		var dateTime = new Date(data.date);
 
@@ -29,9 +28,15 @@ var JrnlManager = function($) {
 		data.forEach(function(el){tagNames.push(el.name);});
 		data.forEach(function(el){tagValues.push(el.numUses);});
 
+		var color = new Color();
+		colors = data.map(function(index, elem) {
+			return color.getRandomColor();
+		})
+
 		var data = {
 			labels: tagNames,
 			datasets: [{
+				backgroundColor: colors,
 				data: tagValues
 			}]
 		};
@@ -52,3 +57,13 @@ var JrnlManager = function($) {
 		});
 	});
 }(jQuery);
+
+var Color = function(){};
+Color.prototype.getRandomColor = function(){
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+};
