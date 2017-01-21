@@ -2,10 +2,13 @@ var JrnlManager = function($) {
 	$.get('/entries/random', function(data) {
 		var dateTime = new Date(data.date);
 
+		var weekDays = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
 		var locale = 'de-CH';
 		var dateStr = dateTime.toLocaleDateString(locale);
 		var timeStr = dateTime.toLocaleTimeString(locale);
-		$('#random-entry .entry-datetime').html(dateStr + " " + timeStr);
+		var weekDayStr = weekDays[dateTime.getDay()];
+		$('#random-entry .entry-datetime').html(weekDayStr + " " + dateStr + " " + timeStr);
 		$('#random-entry .entry-content').html(data.title + data.body);
 	});
 
