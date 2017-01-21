@@ -10,32 +10,28 @@ import spark.Spark;
 import java.util.List;
 import java.util.Optional;
 
-public class EntryController implements IController{
-	
-	@Override
-	public void setup(){
-		Spark.get("/entries", (request, response) -> {
-			return JrnlService.getInstance().getJrnlEntries();
-		}, new JsonTransformer());
-		
-		Spark.get("/entries/date/:datetime", (request, response) -> {
-			String dateTime = request.params(":datetime");
-			Optional<JrnlEntry> jrnlEntry = JrnlService.getInstance().findJrnlEntryWithDate(dateTime);
+public class EntryController implements IController {
 
-			if (jrnlEntry.isPresent()) return jrnlEntry.get();
+    @Override
+    public void setup() {
+        Spark.get("/entries", (request, response) -> JrnlService.getInstance().getJrnlEntries(), new JsonTransformer());
 
-			response.status(Http.NOT_FOUND);
-			return new ErrorMessage("Could not find an entry with datetime %s", dateTime);
-		}, new JsonTransformer());
+        Spark.get("/entries/date/:datetime", (request, response) -> {
+            String dateTime = request.params(":datetime");
+            Optional<JrnlEntry> jrnlEntry = JrnlService.getInstance().findJrnlEntryWithDateTime(dateTime);
 
-		Spark.get("/entries/search/:searchText", (request, response) -> {
-			List<JrnlEntry> entries = JrnlService.getInstance().findJrnlEntries(request.params(":searchText"));
-			if (entries.size() == 0) response.status(Http.NOT_FOUND);
-			return entries;
-		}, new JsonTransformer());
+            if (jrnlEntry.isPresent()) return jrnlEntry.get();
 
-		Spark.get("/entries/random", (request, response) -> {
-			return JrnlService.getInstance().findRandomEntry();
-		}, new JsonTransformer());
-	}
+            response.status(Http.NOT_FOUND);
+            return new ErrorMessage("Could not find an entry with datetime %s", dateTime);
+        }, new JsonTransformer());
+
+        Spark.get("/entries/search/:searchText", (request, response) -> {
+            List<JrnlEntry> entries = JrnlService.getInstance().findJrnlEntries(request.params(":searchText"));
+            if (entries.size() == 0) response.status(Http.NOT_FOUND);
+            return entries;
+        }, new JsonTransformer());
+
+        Spark.get("/entries/random", (request, response) -> JrnlService.getInstance().findRandomEntry(), new JsonTransformer());
+    }
 }

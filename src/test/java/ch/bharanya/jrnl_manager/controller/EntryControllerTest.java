@@ -4,8 +4,10 @@ import ch.bharanya.jrnl_manager.parser.JrnlEntry;
 import ch.bharanya.jrnl_manager.parser.json.JsonJrnl;
 import ch.bharanya.jrnl_manager.util.RequestUtil;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class EntryControllerTest extends AControllerTest{
 	@Test
 	public void getAllEntries() {

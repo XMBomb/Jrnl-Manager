@@ -5,6 +5,7 @@ import java.util.List;
 import ch.bharanya.jrnl_manager.controller.message.EMessageType;
 import ch.bharanya.jrnl_manager.controller.message.ErrorMessage;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gson.internal.LinkedTreeMap;
@@ -12,6 +13,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import ch.bharanya.jrnl_manager.parser.Tag;
 import ch.bharanya.jrnl_manager.util.RequestUtil;
 
+@Ignore
 public class TagControllerTest extends AControllerTest{
 	
 	@Test
@@ -37,7 +39,6 @@ public class TagControllerTest extends AControllerTest{
 	public void getNonExistingTag() {
 		  final TestResponse res = RequestUtil.request("GET", "/tag/@nopasdklajsdolasjd");
 		  final ErrorMessage errorMessage = res.getJson(ErrorMessage.class);
-		  
 		  
 		  Assert.assertTrue(errorMessage.getType() == EMessageType.ERROR);
 		  // I know :) but if the error message at least contains the stuff were looking for I'm happy
